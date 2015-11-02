@@ -5,14 +5,16 @@
 
 using namespace std;
 
-int main () {
-    char nextAction = '0';
-    string name = "";
-
+void welcome() {
     cout << "Welcome" << endl;
     cout << "Press 1 for a new game" << endl;
     cout << "Press 2 to load a saved game" << endl;
     cout << "Press any other key to exit" << endl;
+}
+
+void handleAction () {
+    char nextAction = '0';
+    string name = "";
 
     cin >> nextAction;
 
@@ -25,11 +27,14 @@ int main () {
     else if (nextAction == '2') {
         cout << "Loading an existing game!" << endl;
     }
-    else {
-        cout << "Exit, you shall!" << endl;
-        return 0;
-    }
-    
-    cout << "Annnnnnd, we're done, anyway." << endl;
+}
+
+int main () {
+    welcome();
+
+    handleAction();
+
+    cout << "Exit, you shall!" << endl;
     return 0;
 }
+
