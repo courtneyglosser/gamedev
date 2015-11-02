@@ -26,3 +26,6 @@
 *.exe
 *.out
 *.app
+
+# Executable specific to this game
+visitor
