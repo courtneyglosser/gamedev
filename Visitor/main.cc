@@ -15,6 +15,10 @@ void welcome() {
 void handleAction () {
     char nextAction = '0';
     string name = "";
+    string line = "";
+    string nameFromFile = "";
+    int xp = 0;
+    ifstream myFile ("save.dat");
 
     cin >> nextAction;
 
@@ -26,6 +30,16 @@ void handleAction () {
     }
     else if (nextAction == '2') {
         cout << "Loading an existing game!" << endl;
+
+        if (myFile.is_open() ) {
+//            while (getline (myFile, line) ) {
+//                cout << "Line:  " << line << endl;
+            while (myFile >> nameFromFile >> xp) {
+                cout << "Name:  " << nameFromFile << endl;
+                cout << "XP:  " << xp << endl;
+            }
+            myFile.close();
+        }
     }
 }
 
