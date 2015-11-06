@@ -1,5 +1,10 @@
-// player.h
-// player class
+// player.cc
+// Player class
+
+#ifndef __PLAYER_CC_INCLUDED__
+#define __PLAYER_CC_INCLUDED__
+
+
 #include <iostream>
 
 using namespace std;
@@ -33,3 +38,5 @@ class Player {
             cout << "Hit Points:  " << hitPoints << endl;
         }
 };
+
+#endif

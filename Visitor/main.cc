@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include "player.cc"
+#include "save_file.cc"
 
 using namespace std;
 
@@ -82,6 +83,7 @@ Player handleAction () {
 
 int main () {
     Player loadedPlayer;
+    SaveFile fileManager;
 
     welcome();
 
