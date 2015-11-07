@@ -15,13 +15,13 @@ void welcome() {
 }
 
 Player handleAction () {
+    SaveFile fileManager;
     char nextAction = '0';
     string name = "";
     string line = "";
     string nameFromFile = "";
     int xp = -1;
     ifstream myFile ("save.dat");
-    int lineCount = 0;
     int selPlayer = 0;
     Player actualPlayer;
 
@@ -38,44 +38,13 @@ Player handleAction () {
     else if (nextAction == '2') {
         cout << "Loading an existing game!" << endl;
 
-        if (myFile.is_open() ) {
-            // Validate file, and determine how many save slots are used.
-            while (myFile >> nameFromFile >> xp) {
-                if (!nameFromFile.empty() && xp>-1) {
-                    ++lineCount;
-                }
-            }
-            if (lineCount > 0) {
-                // ASSERT:  I've read at least on player in.
-                // Clear the file EOF flag.
-                myFile.clear();
-                // Reset cursor to beginning of file
-                myFile.seekg(0, ios::beg);
+        //Declare array of savedPlayers
+        Player savedPlayers[fileManager.getNumSavedProfiles()];
 
-                Player myPlayers[lineCount];
+        //Done.  Now, loadPlayers
+        fileManager.loadPlayers(savedPlayers);
 
-                lineCount = 0;
-
-                while (myFile >> nameFromFile >> xp) {
-                    myPlayers[lineCount].loadPlayer(nameFromFile, xp, 0);
-                    lineCount++;
-                }
-
-                for (int i = 0; i < lineCount; i++) {
-                    cout << "Press " << i+1 << " for this player: " << endl;
-                    cout << "======================== " << endl;
-                    myPlayers[i].toString();
-                    cout << endl;
-                }
-
-                cin >> selPlayer;
-                selPlayer--;
-                if (selPlayer >= 0 && selPlayer <= lineCount) {
-                    actualPlayer = myPlayers[selPlayer];
-                }
-            }
-            myFile.close();
-        }
+        actualPlayer = fileManager.selectPlayer(savedPlayers);
     }
 
     return actualPlayer;
@@ -83,7 +52,6 @@ Player handleAction () {
 
 int main () {
     Player loadedPlayer;
-    SaveFile fileManager;
 
     welcome();
 
