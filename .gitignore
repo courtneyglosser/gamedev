@@ -29,3 +29,6 @@
 
 # Executable specific to this game
 visitor
+
+# data file for game:
+*.dat
