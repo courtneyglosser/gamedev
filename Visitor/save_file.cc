@@ -15,42 +15,41 @@ class SaveFile {
         ifstream infile;
         ofstream outfile;
         int numSavedProfiles;
+        int currActiveProfile;
 
+    public:
+        SaveFile () {
+        }
 
-        void defNumSavedProfiles() {
+        void DefNumSavedProfiles() {
+            infile.open("save.dat");
             int lineCount = 0;
             string nameFromFile = "";
             int fileXp = 0;
 
             if (infile.is_open() ) {
-                // Validate file, and determine how many save slots are used.
+                // each line represents a save file?
                 while (infile >> nameFromFile >> fileXp) {
-                    if (!nameFromFile.empty() && fileXp>-1) {
-                        ++lineCount;
-                    }
+                    ++lineCount;
                 }
             }
 
             numSavedProfiles = lineCount;
 
-            // Clear the file EOF flag.
-            infile.clear();
-            // Reset cursor to beginning of file
-            infile.seekg(0, ios::beg);
+            infile.close();
         }
 
-    public:
-        SaveFile () {
-            infile.open("save.dat");
-            defNumSavedProfiles();
-        }
-
-        int getNumSavedProfiles () {
+        int GetNumSavedProfiles () {
             return numSavedProfiles;
         }
-    
 
-        void loadPlayers (Player savedPlayers[]) {
+        void AddNewProfile() {
+            currActiveProfile = numSavedProfiles;
+            numSavedProfiles++;
+        }
+
+        void LoadPlayers (Player savedPlayers[]) {
+            infile.open("save.dat");
             int lineCount = 0;
             string nameFromFile = "";
             int fileXp, fileHitPoints, selPlayer;
@@ -71,7 +70,7 @@ class SaveFile {
 
         }
 
-        Player selectPlayer(Player savedPlayers[]) {
+        Player SelectPlayer(Player savedPlayers[]) {
             Player actualPlayer;
             char selPlayer;
             int input;
@@ -89,9 +88,30 @@ class SaveFile {
             input--;
             if (input >= 0 && input <= numSavedProfiles) {
                 actualPlayer = savedPlayers[input];
+                currActiveProfile = input;
             }
 
             return actualPlayer;
+        }
+
+        int SavePlayer(Player toSave) {
+            Player savedPlayers[numSavedProfiles];
+            LoadPlayers(savedPlayers);
+            ofstream outfile ("save.dat");
+    
+            for (int i = 0; i < numSavedProfiles; i++) {
+                // If active profile, save that, instead
+                if (i == currActiveProfile) {
+                    outfile << toSave.getName() << " " << toSave.getXp() <<
+"\n";
+                }
+                else {
+                    outfile << savedPlayers[i].getName() << " " <<
+savedPlayers[i].getXp() << "\n";
+                }
+            }
+
+            outfile.close();
         }
 
 };

@@ -25,10 +25,17 @@ class Player {
             hitPoints = inhitPoints;
         }
 
+        string getName() { return name; }
+        int getXp()  { return xp; }
+
         void loadPlayer (string inname, int inxp, int inhitPoints) {
             name = inname;
             xp = inxp;
             hitPoints = inhitPoints;
+        }
+
+        void learn(int addXp) {
+            xp += addXp;
         }
 
         void toString() {
