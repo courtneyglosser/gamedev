@@ -60,7 +60,7 @@ class SaveFile {
                     lineCount = 0;
 
                     while (infile >> nameFromFile >> fileXp) {
-                        savedPlayers[lineCount].loadPlayer(nameFromFile, fileXp, 0);
+                        savedPlayers[lineCount].LoadPlayer(nameFromFile, fileXp, 0);
                         lineCount++;
                     }
 
@@ -78,7 +78,7 @@ class SaveFile {
             for (int i = 0; i < numSavedProfiles; i++) {
                 cout << "Press " << i+1 << " for this player: " << endl;
                 cout << "======================== " << endl;
-                savedPlayers[i].toString();
+                savedPlayers[i].ToString();
                 cout << endl;
             }
 
@@ -102,11 +102,11 @@ class SaveFile {
             for (int i = 0; i < numSavedProfiles; i++) {
                 // If active profile, save that, instead
                 if (i == currActiveProfile) {
-                    outfile << toSave.getName() << " " << toSave.getXp() <<
+                    outfile << toSave.GetName() << " " << toSave.getXp() <<
 "\n";
                 }
                 else {
-                    outfile << savedPlayers[i].getName() << " " <<
+                    outfile << savedPlayers[i].GetName() << " " <<
 savedPlayers[i].getXp() << "\n";
                 }
             }

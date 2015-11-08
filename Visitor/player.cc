@@ -12,8 +12,10 @@ using namespace std;
 
 class Player {
     private:
-        string name;
-        int xp, hitPoints;
+        string name;            // Player's name
+        int xp;                 // Experience
+        int hitPoints;          // Hit Points
+
 
     public:
         Player () {
@@ -25,20 +27,20 @@ class Player {
             hitPoints = inhitPoints;
         }
 
-        string getName() { return name; }
+        string GetName() { return name; }
         int getXp()  { return xp; }
 
-        void loadPlayer (string inname, int inxp, int inhitPoints) {
+        void LoadPlayer (string inname, int inxp, int inhitPoints) {
             name = inname;
             xp = inxp;
             hitPoints = inhitPoints;
         }
 
-        void learn(int addXp) {
+        void Learn(int addXp) {
             xp += addXp;
         }
 
-        void toString() {
+        void ToString() {
             cout << "Name:  " << name << endl;
             cout << "================" << endl;
             cout << "XP:  " << xp << endl;
