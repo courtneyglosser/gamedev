@@ -10,5 +10,8 @@ save_file.o:  save_file.cc
 game_manager.o:  game_manager.cc
 	g++ -c game_manager.cc
 
+test_player:  player.o test_player_to_file.cc
+	g++ -o test_player_to_file.out test_player_to_file.cc
+
 clean:
 	rm *.o visitor

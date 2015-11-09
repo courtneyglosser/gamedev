@@ -23,19 +23,16 @@ class SaveFile {
 
         void DefNumSavedProfiles() {
             infile.open("save.dat");
-            int lineCount = 0;
-            string nameFromFile = "";
-            int fileXp = 0;
+            string line = "";
+
+            numSavedProfiles = 0;
 
             if (infile.is_open() ) {
-                // each line represents a save file?
-                while (infile >> nameFromFile >> fileXp) {
-                    ++lineCount;
+                // each line represents a save file
+                while (getline(infile, line)) {
+                    ++numSavedProfiles;
                 }
             }
-
-            numSavedProfiles = lineCount;
-
             infile.close();
         }
 
@@ -51,19 +48,16 @@ class SaveFile {
         void LoadPlayers (Player savedPlayers[]) {
             infile.open("save.dat");
             int lineCount = 0;
-            string nameFromFile = "";
-            int fileXp, fileHitPoints, selPlayer;
-            Player actualPlayer;
+            string myLine = "";
 
             if (infile.is_open() ) {
                 if (numSavedProfiles > 0) {
                     lineCount = 0;
-
-                    while (infile >> nameFromFile >> fileXp) {
-                        savedPlayers[lineCount].LoadPlayer(nameFromFile, fileXp, 0);
+                    while (getline(infile, myLine) 
+                            && lineCount < numSavedProfiles) {
+                        savedPlayers[lineCount].FromFile(myLine);
                         lineCount++;
                     }
-
                 }
                 infile.close();
             }
@@ -102,12 +96,10 @@ class SaveFile {
             for (int i = 0; i < numSavedProfiles; i++) {
                 // If active profile, save that, instead
                 if (i == currActiveProfile) {
-                    outfile << toSave.GetName() << " " << toSave.getXp() <<
-"\n";
+                    outfile << toSave.ToFile();
                 }
                 else {
-                    outfile << savedPlayers[i].GetName() << " " <<
-savedPlayers[i].getXp() << "\n";
+                    outfile << savedPlayers[i].ToFile();
                 }
             }
 
