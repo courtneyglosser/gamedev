@@ -29,6 +29,7 @@ class Monster {
 
         string GetName() { return name; }
         int GetXp()  { return xp; }
+        int GetHitPoints() { return hitPoints; }
 
         void LoadPlayer (string inname, int inxp, int inhitPoints) {
             name = inname;
@@ -45,6 +46,10 @@ class Monster {
             cout << "================" << endl;
             cout << "XP:  " << xp << endl;
             cout << "Hit Points:  " << hitPoints << endl;
+        }
+
+        void TakeDamage(int damage) {
+            hitPoints -= damage;
         }
 };
 

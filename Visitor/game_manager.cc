@@ -68,6 +68,14 @@ class GameManager {
             cout << loadedPlayer.GetName() << " is attacking! " << endl;
             int damage = loadedPlayer.Attack();
             cout << badGuy.GetName() << " is going to take " << damage << endl;
+            badGuy.TakeDamage(damage);
+            cout << badGuy.GetName() << " has " << badGuy.GetHitPoints() << endl;
+            if (badGuy.GetHitPoints() <= 0) {
+                cout << "Monster is dead!!" << endl;
+                cout << loadedPlayer.GetName() << " receives "
+                     << badGuy.GetXp() << endl;
+                loadedPlayer.Learn(badGuy.getXp());
+            }
         }
 
 };

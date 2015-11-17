@@ -12,7 +12,7 @@ int main () {
     SaveFile fileManager;
     GameManager game;
     
-    Monster badGuy("Kobold", 2, 2);
+    Monster badGuy("Kobold", 3, 7);
 
     game.Init();
 
