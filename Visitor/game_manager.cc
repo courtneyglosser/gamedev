@@ -8,6 +8,7 @@
 #include <iostream>
 #include "player.cc"
 #include "save_file.cc"
+#include "monster.cc"
 
 using namespace std;
 
@@ -61,6 +62,12 @@ class GameManager {
             cout << "Exit, you shall!" << endl;
 
             return 0;
+        }
+
+        void ResolveAttack(Player &loadedPlayer, Monster badGuy) {
+            cout << loadedPlayer.GetName() << " is attacking! " << endl;
+            int damage = loadedPlayer.Attack();
+            cout << badGuy.GetName() << " is going to take " << damage << endl;
         }
 
 };

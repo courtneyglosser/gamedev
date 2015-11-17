@@ -3,6 +3,7 @@
 #include "player.cc"
 #include "save_file.cc"
 #include "game_manager.cc"
+#include "monster.cc"
 
 using namespace std;
 
@@ -10,6 +11,8 @@ int main () {
     Player loadedPlayer;
     SaveFile fileManager;
     GameManager game;
+    
+    Monster badGuy("Kobold", 2, 2);
 
     game.Init();
 
@@ -17,10 +20,13 @@ int main () {
 
     loadedPlayer = game.HandleAction(fileManager);
 
-    loadedPlayer.ToString();
-
     // XP for loading the character
     loadedPlayer.Learn(2);
+
+    loadedPlayer.ToString();
+    badGuy.ToString();
+
+    game.ResolveAttack(loadedPlayer, badGuy);
 
     fileManager.SavePlayer(loadedPlayer);
 

@@ -15,6 +15,9 @@ class Player {
         string name;            // Player's name
         int xp;                 // Experience
         int hitPoints;          // Hit Points
+        int minAttack;          // Lower bound for randomized damage range
+        int maxAttack;          // Upper bound for randomized damage range
+        int toHit;              // Percentile _above_ which is a miss.
 
 
     public:
@@ -25,6 +28,9 @@ class Player {
             name = inname;
             xp = inxp;
             hitPoints = inhitPoints;
+            minAttack = 0;
+            maxAttack = 10;
+            toHit = 75;
         }
 
         string GetName() { return name; }
@@ -34,6 +40,9 @@ class Player {
             name = inname;
             xp = inxp;
             hitPoints = inhitPoints;
+            minAttack = 0;
+            maxAttack = 10;
+            toHit = 75;
         }
 
         void Learn(int addXp) {
@@ -58,7 +67,8 @@ class Player {
             // Super helpful link on integer string concatenation
             ostringstream oss;
             
-            oss << name << " " << xp << " " << hitPoints << "\n";
+            oss << name << " " << xp << " " << hitPoints << " " << minAttack
+                << " " << maxAttack << " " << toHit << "\n";
     
             rtn = oss.str();
 
@@ -71,7 +81,12 @@ class Player {
             // Stream in the string from the file.
             ss << fileLine;
             // Parse out the space delimited values into private data members
-            ss >> name >> xp >> hitPoints;
+            ss >> name >> xp >> hitPoints >> minAttack >> maxAttack >> toHit;
+        }
+
+        int Attack() {
+            cout << "Attacking function = maxAttack = " << maxAttack << endl;
+            return maxAttack;
         }
 };
 
