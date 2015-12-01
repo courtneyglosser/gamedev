@@ -27,8 +27,9 @@
 *.out
 *.app
 
-# Executable specific to this game
+# Executable specific to this repository
 visitor
+01_hello_SDL
 
 # data file for game:
 *.dat
