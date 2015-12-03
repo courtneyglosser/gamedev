@@ -26,6 +26,7 @@ SDL_Surface* gScreenSurface = NULL;
 
 //The image we will load and show on the screen
 SDL_Surface* gHelloWorld = NULL;
+SDL_Surface* gSplash2 = NULL;
 
 int main( int argc, char* args[] )
 {
@@ -42,6 +43,12 @@ int main( int argc, char* args[] )
         else
         {
             SDL_BlitSurface( gHelloWorld, NULL, gScreenSurface, NULL);
+
+            SDL_UpdateWindowSurface ( gWindow );
+
+            SDL_Delay( 2000 );
+
+            SDL_BlitSurface( gSplash2, NULL, gScreenSurface, NULL);
 
             SDL_UpdateWindowSurface ( gWindow );
 
@@ -98,6 +105,13 @@ bool loadMedia()
     if( gHelloWorld == NULL )
     {
         printf( "Unable to load image %s! SDL Error: %s\n", "splash.bmp", SDL_GetError() );
+        success = false;
+    }
+    //Load splash image
+    gSplash2 = SDL_LoadBMP("splash2.bmp" );
+    if( gSplash2 == NULL )
+    {
+        printf( "Unable to load image %s! SDL Error: %s\n", "splash2.bmp", SDL_GetError() );
         success = false;
     }
 
