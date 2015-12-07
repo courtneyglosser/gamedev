@@ -2,7 +2,7 @@
 OBJS = learn_SDL.cc
 
 #OBJ_NAME specifies the name of our exectuable
-OBJ_NAME = learning
+OBJ_NAME = fill
 
 #This is the target that compiles our executable
 all : $(OBJS)

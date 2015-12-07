@@ -30,6 +30,7 @@
 # Executable specific to this repository
 visitor
 01_hello_SDL
+fill
 
 # data file for game:
 *.dat
