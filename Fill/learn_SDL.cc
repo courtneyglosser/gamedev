@@ -72,6 +72,8 @@ int main( int argc, char* args[] )
 
             //Set default current surface
             gCurrentSurface = gKeyPressSurfaces[ KEY_PRESS_SURFACE_DEFAULT ];
+            SDL_BlitSurface( gCurrentSurface, NULL, gScreenSurface, NULL);
+            SDL_UpdateWindowSurface ( gWindow );
 
             //While application is running
             while( !quit ) {
