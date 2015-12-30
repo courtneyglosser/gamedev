@@ -129,7 +129,7 @@ bool GameManager::loadMedia()
 
     //Load default surface
     gKeyPressSurfaces[ KEY_PRESS_SURFACE_DEFAULT ] = loadSurface(
-"bmps/splash.bmp" );
+"bmps/splash2.bmp" );
     if( gKeyPressSurfaces[ KEY_PRESS_SURFACE_DEFAULT ] == NULL )
     {
         printf( "Failed to load default image!\n" );

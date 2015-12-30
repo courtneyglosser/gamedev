@@ -55,24 +55,29 @@ int main( int argc, char* args[] )
                         {
 
                             case SDLK_UP:
-                            myGame->gCurrentSurface = myGame->gKeyPressSurfaces[ KEY_PRESS_SURFACE_UP ];
-                            break;
+                                myGame->gCurrentSurface = myGame->gKeyPressSurfaces[ KEY_PRESS_SURFACE_UP ];
+                                break;
 
                             case SDLK_DOWN:
-                            myGame->gCurrentSurface = myGame->gKeyPressSurfaces[ KEY_PRESS_SURFACE_DOWN ];
-                            break;
+                                myGame->gCurrentSurface = myGame->gKeyPressSurfaces[ KEY_PRESS_SURFACE_DOWN ];
+                                break;
 
                             case SDLK_LEFT:
-                            myGame->gCurrentSurface = myGame->gKeyPressSurfaces[ KEY_PRESS_SURFACE_LEFT ];
-                            break;
+                                myGame->gCurrentSurface = myGame->gKeyPressSurfaces[ KEY_PRESS_SURFACE_LEFT ];
+                                break;
 
                             case SDLK_RIGHT:
-                            myGame->gCurrentSurface = myGame->gKeyPressSurfaces[ KEY_PRESS_SURFACE_RIGHT ];
-                            break;
+                                myGame->gCurrentSurface = myGame->gKeyPressSurfaces[ KEY_PRESS_SURFACE_RIGHT ];
+                                break;
+
+                            case SDLK_q:
+                            case SDLK_ESCAPE:
+                                quit = true;
+                                break;
 
                             default:
-                            myGame->gCurrentSurface = myGame->gKeyPressSurfaces[ KEY_PRESS_SURFACE_DEFAULT ];
-                            break;
+                                myGame->gCurrentSurface = myGame->gKeyPressSurfaces[ KEY_PRESS_SURFACE_DEFAULT ];
+                                break;
 
                         }
                         SDL_BlitSurface( myGame->gCurrentSurface, NULL, myGame->gScreenSurface, NULL);
