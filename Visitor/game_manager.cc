@@ -15,6 +15,7 @@ using namespace std;
 
 class GameManager {
     private:
+        SaveFile fileManager;           // Manage players saved file state
 
     public:
         GameManager () {
@@ -27,7 +28,7 @@ class GameManager {
             cout << "Press any other key to exit" << endl;
         }
 
-        Player HandleAction (SaveFile &fileManager) {
+        Player SelectPlayer () {
             char nextAction = '0';
             string name = "";
             Player actualPlayer;
@@ -64,7 +65,9 @@ class GameManager {
             return actualPlayer;
         }
 
-        int Exit () {
+        int Exit (Player loadedPlayer) {
+            // Save player before exiting.
+            fileManager.SavePlayer(loadedPlayer);
 
             cout << "Exit, you shall!" << endl;
 

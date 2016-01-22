@@ -41,6 +41,7 @@ class Player {
             name = inname;
             xp = inxp;
             hitPoints = inhitPoints;
+            maxHP = inhitPoints;
             minAttack = 0;
             maxAttack = 10;
             toHit = 75;

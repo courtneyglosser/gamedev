@@ -19,6 +19,7 @@ class SaveFile {
 
     public:
         SaveFile () {
+            DefNumSavedProfiles();
         }
 
         void DefNumSavedProfiles() {
