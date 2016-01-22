@@ -34,6 +34,24 @@ class GameManager {
 
             cin >> nextAction;
 
+            if (nextAction == '2') {
+                cout << "Loading an existing game!" << endl;
+
+		//ensure saved there is a save file
+		if (fileManager.GetNumSavedProfiles() > 0 ) {
+
+			//Declare array of savedPlayers
+			Player savedPlayers[fileManager.GetNumSavedProfiles()];
+
+			//Done.  Now, load players
+			fileManager.LoadPlayers(savedPlayers);
+
+			actualPlayer = fileManager.SelectPlayer(savedPlayers);
+		} else {
+			cout << "There are currently no saved profiles to load" << endl;
+			nextAction = '1';
+		}
+            }
             if (nextAction == '1') {
                 cout << "Brand new game!" << endl;
                 cout << "Enter your name:  ";
@@ -41,17 +59,6 @@ class GameManager {
 
                 actualPlayer.LoadPlayer(name, 0, 10);
                 fileManager.AddNewProfile();
-            }
-            else if (nextAction == '2') {
-                cout << "Loading an existing game!" << endl;
-
-                //Declare array of savedPlayers
-                Player savedPlayers[fileManager.GetNumSavedProfiles()];
-
-                //Done.  Now, load players
-                fileManager.LoadPlayers(savedPlayers);
-
-                actualPlayer = fileManager.SelectPlayer(savedPlayers);
             }
 
             return actualPlayer;
@@ -74,7 +81,7 @@ class GameManager {
                 cout << "Monster is dead!!" << endl;
                 cout << loadedPlayer.GetName() << " receives "
                      << badGuy.GetXp() << endl;
-                loadedPlayer.Learn(badGuy.getXp());
+                loadedPlayer.Learn(badGuy.GetXp());
             }
         }
 
