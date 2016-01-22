@@ -1,0 +1,21 @@
+{
+  "name": "Numbers Game",
+  "homepage": "https://github.com/courtneyglosser/gamedev",
+  "authors": [
+    "Courtney Glosser <glosser_courtney@bah.com>"
+  ],
+  "description": "Simple numbers game",
+  "main": "main",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
