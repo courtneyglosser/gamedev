@@ -84,6 +84,10 @@ class Player {
             ss >> name >> xp >> hitPoints >> minAttack >> maxAttack >> toHit;
         }
 
+        void TakeDamage(int damage) {
+            hitPoints -= damage;
+        }
+
         int Attack() {
             cout << "Attacking function = maxAttack = " << maxAttack << endl;
             return maxAttack;

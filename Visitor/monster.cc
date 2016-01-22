@@ -15,6 +15,7 @@ class Monster {
         string name;            // Player's name
         int xp;                 // Experience
         int hitPoints;          // Hit Points
+        int maxAttack;
 
 
     public:
@@ -25,6 +26,7 @@ class Monster {
             name = inname;
             xp = inxp;
             hitPoints = inhitPoints;
+            maxAttack = 2;
         }
 
         string GetName() { return name; }
@@ -50,6 +52,11 @@ class Monster {
 
         void TakeDamage(int damage) {
             hitPoints -= damage;
+        }
+        
+        int Attack() {
+            cout << "Attacking function = maxAttack = " << maxAttack << endl;
+            return maxAttack;
         }
 };
 
