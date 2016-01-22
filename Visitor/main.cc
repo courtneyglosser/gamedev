@@ -7,8 +7,8 @@
 using namespace std;
 
 int main () {
-    Player loadedPlayer;
-    GameManager game;
+    Player loadedPlayer;  // Our hero
+    GameManager game;     // Our game
 
     // #TODO:  Eventually pull this out of main all-together
     // #TODO:  Pull monsters from file as needed.
@@ -32,6 +32,7 @@ int main () {
     // Execute a single attack
     game.ResolveAttack(loadedPlayer, badGuy);
 
+    // Save the player and close out gracefully
     return game.Exit(loadedPlayer);
 }
 
