@@ -9,7 +9,7 @@ BUILDDIR := build
 SRCEXT := cc
 
 visitor:  main.cc monster.o player.o save_file.o game_manager.o
-	$(CC) -o visitor main.cc
+	$(CC) main.cc -w -lSDL2 -lSDL2_ttf -o visitor 
 
 monster.o:  monster.cc
 	$(CC) -c monster.cc
