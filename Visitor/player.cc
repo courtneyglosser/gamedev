@@ -22,9 +22,11 @@ class Player {
 
 
     public:
+        // Empty constructor
         Player () {
         }
 
+        // Constructor with data
         Player (string inname, int inxp, int inhitPoints) {
             name = inname;
             xp = inxp;
@@ -34,9 +36,11 @@ class Player {
             toHit = 75;
         }
 
+        // Getters
         string GetName() { return name; }
         int GetXp()  { return xp; }
 
+        // Load in a new player
         void LoadPlayer (string inname, int inxp, int inhitPoints) {
             name = inname;
             xp = inxp;
@@ -47,10 +51,12 @@ class Player {
             toHit = 75;
         }
 
+        // gain experience for stuff
         void Learn(int addXp) {
             xp += addXp;
         }
 
+        // Display for Player Character
         void ToString() {
             cout << "Name:  " << name << endl;
             cout << "================" << endl;
@@ -77,6 +83,8 @@ class Player {
             return rtn;
         }
 
+
+        // Pull the player data in from the file.  Assumed a strict format
         void FromFile(string fileLine) {
             // Initiate the stringstream
             stringstream ss;
@@ -86,10 +94,13 @@ class Player {
             ss >> name >> xp >> hitPoints >> maxHP >> minAttack >> maxAttack >> toHit;
         }
 
+        // Reduce HP appropriate amount
         void TakeDamage(int damage) {
             hitPoints -= damage;
         }
 
+        // Calculate and return appropriate attack damage.
+        // TODO:  Need to calculate chance to hit, as well.
         int Attack() {
             cout << "Attacking function = maxAttack = " << maxAttack << endl;
             return maxAttack;

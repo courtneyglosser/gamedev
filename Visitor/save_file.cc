@@ -12,17 +12,21 @@ using namespace std;
 
 class SaveFile {
     private:
-        ifstream infile;
-        ofstream outfile;
-        int numSavedProfiles;
-        int currActiveProfile;
+        ifstream infile;        // File reading stream
+        ofstream outfile;       // File writing stream
+        int numSavedProfiles;   // Count of saved profiles read from file
+        int currActiveProfile;  // The current profile of user playing
 
     public:
+        // Basic Constructor.  Read file and count total profiles
         SaveFile () {
             DefNumSavedProfiles();
         }
 
+        // Read in file and count number of profiles saved there.
         void DefNumSavedProfiles() {
+            // TODO:  abstract this filename a bit more.  Maybe a base
+            // "filemanager" class to handle this stuff.
             infile.open("save.dat");
             string line = "";
 
