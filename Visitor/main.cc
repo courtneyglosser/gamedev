@@ -1,7 +1,5 @@
 
 //Using SDL and standard IO
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
 #include <iostream>
 #include "player.cc"
 #include "game_manager.cc"

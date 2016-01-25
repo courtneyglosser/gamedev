@@ -6,8 +6,6 @@
 
 
 #include <iostream>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
 #include "sdl_manager.cc"
 #include "player.cc"
 #include "save_file.cc"
