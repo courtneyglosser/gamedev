@@ -39,6 +39,8 @@ class Player {
         // Getters
         string GetName() { return name; }
         int GetXp()  { return xp; }
+        int GetHP()  { return hitPoints; }
+        int GetMaxHP () { return maxHP; }
 
         // Load in a new player
         void LoadPlayer (string inname, int inxp, int inhitPoints) {

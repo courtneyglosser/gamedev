@@ -31,6 +31,8 @@ class GameManager {
         // Otherwise, present the user with existing character options read in
         // from file.
         Player SelectPlayer ();
+
+        void DisplayPlayer(Player loadedPlayer);
  
         // Close out the game, save state and return appropriate exit code.
         int Exit (Player loadedPlayer);
@@ -41,7 +43,6 @@ class GameManager {
         void ResolveAttack(Player &loadedPlayer, Monster badGuy);
 
 };  // End GameManager
-
 
 
 
@@ -106,11 +107,19 @@ Player GameManager::SelectPlayer() {
 
     return actualPlayer;
 }
+
+void GameManager::DisplayPlayer(Player player) {
+    display.DisplayCharacter(player);
+}
+
+
 int GameManager::Exit(Player loadedPlayer) {
     // Save player before exiting.
     fileManager.SavePlayer(loadedPlayer);
 
     cout << "Exit, you shall!" << endl;
+
+    display.Exit();
 
     return 0;
 }

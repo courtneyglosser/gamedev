@@ -29,6 +29,8 @@ int main( int argc, char* args[] )
     // Spit out player details
     loadedPlayer.ToString();
 
+    game.DisplayPlayer(loadedPlayer);
+
     // Spit out monster details
     badGuy.ToString();
 
