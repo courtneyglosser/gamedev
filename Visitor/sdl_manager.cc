@@ -25,7 +25,6 @@ class SDLManager {
         SDL_Surface* gScreenSurface = NULL; //The surface contained by the window
         TTF_Font *font;                     // Load font for text output
         TTF_Font *titleFont;                // Load font for title text
-        // TODO:  Some day may be worth extra credit to allow option to adjust
         SDL_Color bg_color;     // Game's background color
 
     public:
@@ -43,6 +42,7 @@ class SDLManager {
 };  // End SDLManager
 
 void SDLManager::Init() {
+    // TODO:  Some day may be worth extra credit to allow option to adjust
     bg_color.r = 0;
     bg_color.b = 0;
     bg_color.g = 0;
