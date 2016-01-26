@@ -24,6 +24,8 @@ class SDLManager {
         SDL_Window* gWindow = NULL;         // The window we'll be rendering to
         SDL_Surface* gScreenSurface = NULL; //The surface contained by the window
         TTF_Font *font;                     // Load font for text output
+        // TODO:  Some day may be worth extra credit to allow option to adjust
+        SDL_Color bg_color;     // Game's background color
 
     public:
         // Empty constructor
@@ -33,12 +35,16 @@ class SDLManager {
         void Init();
 
         void DisplayCharacter(Player loadedPlayer);
- 
+        void DisplayText(string text, SDL_Color color, SDL_Rect location); 
+
         int Exit ();
 
 };  // End SDLManager
 
 void SDLManager::Init() {
+    bg_color.r = 0;
+    bg_color.b = 0;
+    bg_color.g = 0;
     //Initialization flag
     bool success = true;
 
@@ -84,22 +90,32 @@ void SDLManager::Init() {
     }
 
 
-
-
 }
 
 void SDLManager::DisplayCharacter(Player player) {
     // Write text to surface
     SDL_Surface *text;
     SDL_Color text_color = {255, 255, 255};
-    SDL_Color bg_color = {0, 0, 0};
     SDL_Rect text_location = {(SCREEN_WIDTH - 150), 10, 0, 0};
     string characterName = player.GetName();
     std::stringstream ss;
     ss << player.GetHP() << "/" << player.GetMaxHP();
     string characterHP = ss.str(); 
+
+    DisplayText(characterName, text_color, text_location); 
+
+    SDL_Rect text_location2 = {(SCREEN_WIDTH - 150), 40, 0, 0};
+
+    DisplayText(characterHP, text_color, text_location2);
+
+    SDL_UpdateWindowSurface ( gWindow );
+
+}
+
+void SDLManager::DisplayText(string displayStr, SDL_Color color, SDL_Rect location) {
+    SDL_Surface *text;
     // Note:  c_str to support char * casting necessary in SDL call
-    text = TTF_RenderText_Shaded(font, characterName.c_str(), text_color, bg_color);
+    text = TTF_RenderText_Shaded(font, displayStr.c_str(), color, bg_color);
 
     if (text == NULL)
     {
@@ -109,20 +125,10 @@ void SDLManager::DisplayCharacter(Player player) {
         exit(1);
     }
 
-    if (SDL_BlitSurface(text, NULL, gScreenSurface, &text_location) != 0)
+    if (SDL_BlitSurface(text, NULL, gScreenSurface, &location) != 0)
     {
         cerr << "SDL_BlitSurface() Failed: " << SDL_GetError() << endl;
     }
-
-    SDL_Rect text_location2 = {(SCREEN_WIDTH - 150), 40, 0, 0};
-    // Note:  c_str to support char * casting necessary in SDL call
-    text = TTF_RenderText_Shaded(font, characterHP.c_str(), text_color, bg_color);
-    if (SDL_BlitSurface(text, NULL, gScreenSurface, &text_location2) != 0)
-    {
-        cerr << "SDL_BlitSurface() Failed: " << SDL_GetError() << endl;
-    }
-
-    SDL_UpdateWindowSurface ( gWindow );
 
 }
 
