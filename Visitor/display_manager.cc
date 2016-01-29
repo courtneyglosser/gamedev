@@ -12,7 +12,6 @@
 #include "player.cc"
 #include "save_file.cc"
 #include "monster.cc"
-#include "menus.cc"
 
 using namespace std;
 
@@ -27,7 +26,6 @@ class DisplayManager {
         TTF_Font *font;                     // Load font for text output
         TTF_Font *titleFont;                // Load font for title text
         SDL_Color bg_color;                 // Window's background color
-        Menus menu;                         // SDL menu input management class
 
     public:
         // Empty constructor
@@ -99,7 +97,6 @@ void DisplayManager::Init() {
 }
 
 void DisplayManager::DisplayWelcome() {
-
     SDL_Color text_color = {255, 255, 255};
     SDL_Rect text_location = {(SCREEN_WIDTH/2) - 50, 10, 0, 0};
     DisplayText("Welcome, Visitor", text_color, text_location, titleFont);
@@ -109,11 +106,10 @@ void DisplayManager::DisplayWelcome() {
     DisplayText("Press 1 to start a new character", text_color, new_char_location, titleFont);
     SDL_UpdateWindowSurface ( gWindow );
 
-    SDL_Rect load_char_location = {(SCREEN_WIDTH/2) - 50, 170, 0, 0};
+    SDL_Rect load_char_location = {(SCREEN_WIDTH/2) - 50, 190, 0, 0};
     DisplayText("Press 2 to load an existing character", text_color, load_char_location, titleFont);
     SDL_UpdateWindowSurface ( gWindow );
 
-    menu.WelcomeInput();
 }
 
 void DisplayManager::DisplayCharacter(Player player) {
@@ -159,7 +155,7 @@ void DisplayManager::DisplayText(string displayStr, SDL_Color color, SDL_Rect lo
 
 int DisplayManager::Exit() {
 
-    SDL_Delay(5000);
+    SDL_Delay(1000);
 
     //Deallocate surface
     SDL_FreeSurface( gScreenSurface );

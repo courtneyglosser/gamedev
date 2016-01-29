@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "display_manager.cc"
+#include "input_manager.cc"
 #include "player.cc"
 #include "save_file.cc"
 #include "monster.cc"
@@ -17,10 +18,13 @@ class GameManager {
     private:
         SaveFile fileManager;           // Manage players saved file state
         DisplayManager display;
+        InputManager input;
+        char nextAction;
 
     public:
-        // Empty constructor
+        // Constructor - Just initializing some standard variables
         GameManager () {
+            nextAction = '0';
         }
 
         // Initialize the game.  Here, just presents a welcome menu.  Options
@@ -51,18 +55,46 @@ void GameManager::Init() {
 
     display.DisplayWelcome();
 
+    char welcomeInput = input.WelcomeMenuInput();
+
+    cout << "Did I get my input?  " << welcomeInput << endl;
+
+    bool quit = false;
+    SDL_Event e;
+    while (!quit) {
+        //Handle events on queue
+        while( SDL_PollEvent( &e ) != 0 )
+        {
+            if( e.type == SDL_KEYDOWN )
+            {
+                //Select surfaces based on key press
+                switch( e.key.keysym.sym )
+                {
+                    case SDLK_1:
+                        nextAction = '1';
+                    break;
+
+                    case SDLK_2:
+                        nextAction = '2';
+                    break;
+                }
+                quit = true;
+            }
+        }
+    }
+
     cout << "Welcome" << endl;
     cout << "Press 1 for a new game" << endl;
     cout << "Press 2 to load a saved game" << endl;
     cout << "Press any other key to exit" << endl;
+    cout << "I got : " << nextAction << " boom! " << endl;
     // TODO:  Add more options? -> Development tools?
 }
 
 Player GameManager::SelectPlayer() {
-    char nextAction = '0';      // Initializing action
     Player actualPlayer;        // Return value for player
 
-    cin >> nextAction;          // Retrieve user entered input
+//    cin >> nextAction;          // Retrieve user entered input
 
     if (nextAction == '2') {
         cout << "Loading an existing game!" << endl;
