@@ -1,8 +1,8 @@
-// sdl_manager.cc
-// SDLManager class
+// display_manager.cc
+// DisplayManager class
 
-#ifndef __SDL_MANAGER_CC_INCLUDED__
-#define __SDL_MANAGER_CC_INCLUDED__
+#ifndef __DISPLAY_MANAGER_CC_INCLUDED__
+#define __DISPLAY_MANAGER_CC_INCLUDED__
 
 
 #include <iostream>
@@ -12,6 +12,7 @@
 #include "player.cc"
 #include "save_file.cc"
 #include "monster.cc"
+#include "menus.cc"
 
 using namespace std;
 
@@ -19,29 +20,32 @@ using namespace std;
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 768;
 
-class SDLManager {
+class DisplayManager {
     private:
         SDL_Window* gWindow = NULL;         // The window we'll be rendering to
         SDL_Surface* gScreenSurface = NULL; //The surface contained by the window
         TTF_Font *font;                     // Load font for text output
         TTF_Font *titleFont;                // Load font for title text
-        SDL_Color bg_color;     // Game's background color
+        SDL_Color bg_color;                 // Window's background color
+        Menus menu;                         // SDL menu input management class
 
     public:
         // Empty constructor
-        SDLManager () {
+        DisplayManager () {
         }
 
         void Init();
 
+        void DisplayWelcome();
+
         void DisplayCharacter(Player loadedPlayer);
-        void DisplayText(string text, SDL_Color color, SDL_Rect location, bool titleFont); 
+        void DisplayText(string text, SDL_Color color, SDL_Rect location, TTF_Font *useFont); 
 
         int Exit ();
 
-};  // End SDLManager
+};  // End DisplayManager
 
-void SDLManager::Init() {
+void DisplayManager::Init() {
     // TODO:  Some day may be worth extra credit to allow option to adjust
     bg_color.r = 0;
     bg_color.b = 0;
@@ -92,14 +96,27 @@ void SDLManager::Init() {
         exit(1);
     }
 
-    SDL_Color text_color = {255, 255, 255};
-    SDL_Rect text_location = {(SCREEN_WIDTH/2) - 50, 10, 0, 0};
-    DisplayText("Welcome, Visitor", text_color, text_location, true);
-    SDL_UpdateWindowSurface ( gWindow );
-
 }
 
-void SDLManager::DisplayCharacter(Player player) {
+void DisplayManager::DisplayWelcome() {
+
+    SDL_Color text_color = {255, 255, 255};
+    SDL_Rect text_location = {(SCREEN_WIDTH/2) - 50, 10, 0, 0};
+    DisplayText("Welcome, Visitor", text_color, text_location, titleFont);
+    SDL_UpdateWindowSurface ( gWindow );
+
+    SDL_Rect new_char_location = {(SCREEN_WIDTH/2) - 50, 150, 0, 0};
+    DisplayText("Press 1 to start a new character", text_color, new_char_location, titleFont);
+    SDL_UpdateWindowSurface ( gWindow );
+
+    SDL_Rect load_char_location = {(SCREEN_WIDTH/2) - 50, 170, 0, 0};
+    DisplayText("Press 2 to load an existing character", text_color, load_char_location, titleFont);
+    SDL_UpdateWindowSurface ( gWindow );
+
+    menu.WelcomeInput();
+}
+
+void DisplayManager::DisplayCharacter(Player player) {
     // Write text to surface
     SDL_Surface *text;
     SDL_Color text_color = {255, 255, 255};
@@ -109,27 +126,21 @@ void SDLManager::DisplayCharacter(Player player) {
     ss << player.GetHP() << "/" << player.GetMaxHP();
     string characterHP = ss.str(); 
 
-    DisplayText(characterName, text_color, text_location, false); 
+    DisplayText(characterName, text_color, text_location, font); 
 
     SDL_Rect text_location2 = {(SCREEN_WIDTH - 150), 40, 0, 0};
 
-    DisplayText(characterHP, text_color, text_location2, false);
+    DisplayText(characterHP, text_color, text_location2, font);
 
     SDL_UpdateWindowSurface ( gWindow );
 
 }
 
-void SDLManager::DisplayText(string displayStr, SDL_Color color, SDL_Rect location, bool titleText) {
+void DisplayManager::DisplayText(string displayStr, SDL_Color color, SDL_Rect location, TTF_Font *useFont) {
     SDL_Surface *text;
-    TTF_Font *displayFont;
-
-    if (titleText) {
-        displayFont = titleFont;
-    } else {
-        displayFont = font;
-    }
+    
     // Note:  c_str to support char * casting necessary in SDL call
-    text = TTF_RenderText_Shaded(displayFont, displayStr.c_str(), color, bg_color);
+    text = TTF_RenderText_Shaded(useFont, displayStr.c_str(), color, bg_color);
 
     if (text == NULL)
     {
@@ -146,7 +157,7 @@ void SDLManager::DisplayText(string displayStr, SDL_Color color, SDL_Rect locati
 
 }
 
-int SDLManager::Exit() {
+int DisplayManager::Exit() {
 
     SDL_Delay(5000);
 
@@ -161,6 +172,8 @@ int SDLManager::Exit() {
     // Release font
     TTF_CloseFont(font);
     font = NULL;
+    TTF_CloseFont(titleFont);
+    titleFont = NULL;
 
     //Quit SDL subsystems
     TTF_Quit();

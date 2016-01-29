@@ -6,7 +6,7 @@
 
 
 #include <iostream>
-#include "sdl_manager.cc"
+#include "display_manager.cc"
 #include "player.cc"
 #include "save_file.cc"
 #include "monster.cc"
@@ -16,7 +16,7 @@ using namespace std;
 class GameManager {
     private:
         SaveFile fileManager;           // Manage players saved file state
-        SDLManager display;
+        DisplayManager display;
 
     public:
         // Empty constructor
@@ -49,7 +49,7 @@ class GameManager {
 void GameManager::Init() {
     display.Init();
 
-
+    display.DisplayWelcome();
 
     cout << "Welcome" << endl;
     cout << "Press 1 for a new game" << endl;
