@@ -16,7 +16,7 @@ using namespace std;
 
 class GameManager {
     private:
-        FileManager saveFile;            // Manage players saved file state
+        FileManager saveFile;           // Manage players saved file state
         DisplayManager display;         // Manage the SDL Display to the window
         InputManager input;             // Manage the SDL Input for the program
         char mainMenuAction;            // User's requested main menu action
@@ -60,6 +60,7 @@ void GameManager::Init() {
     // Retrieve expected user input for main menu.
     mainMenuAction = input.WelcomeMenuInput();
     // ASSERT:  mainMenuAction == '0', '1', or '2'
+    display.DisplayWipe();
 }
 
 Player GameManager::SelectPlayer() {
@@ -76,6 +77,8 @@ Player GameManager::SelectPlayer() {
 
             //Done.  Now, load players
             saveFile.LoadPlayers(savedPlayers);
+
+            display.DisplayPlayers(savedPlayers);
 
             // Present the user with existing player options for
             // selection.

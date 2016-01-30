@@ -21,7 +21,8 @@ const int SCREEN_HEIGHT = 768;
 class DisplayManager {
     private:
         SDL_Window* gWindow = NULL;         // The window we'll be rendering to
-        SDL_Surface* gScreenSurface = NULL; //The surface contained by the window
+        SDL_Surface* gScreenSurface = NULL; // The surface contained by the window
+        SDL_Surface* gBlankSurface = NULL;  // Maintain a blank surface to clear the screen
         TTF_Font *font;                     // Load font for text output
         TTF_Font *titleFont;                // Load font for title text
         SDL_Color bg_color;                 // Window's background color
@@ -34,9 +35,12 @@ class DisplayManager {
         void Init();
 
         void DisplayWelcome();
+        void DisplayPlayers(Player savedPlayers[]);
 
         void DisplayCharacter(Player loadedPlayer);
         void DisplayText(string text, SDL_Color color, SDL_Rect location, TTF_Font *useFont); 
+
+        void DisplayWipe();
 
         int Exit ();
 
@@ -95,6 +99,7 @@ void DisplayManager::Init() {
 
 }
 
+
 void DisplayManager::DisplayWelcome() {
     SDL_Color text_color = {255, 255, 255};
     SDL_Rect text_location = {(SCREEN_WIDTH/2) - 50, 10, 0, 0};
@@ -108,6 +113,10 @@ void DisplayManager::DisplayWelcome() {
     SDL_Rect load_char_location = {(SCREEN_WIDTH/2) - 50, 190, 0, 0};
     DisplayText("Press 2 to load an existing character", text_color, load_char_location, titleFont);
     SDL_UpdateWindowSurface ( gWindow );
+
+}
+
+void DisplayManager::DisplayPlayers(Player savedPlayers[]) {
 
 }
 
@@ -150,6 +159,12 @@ void DisplayManager::DisplayText(string displayStr, SDL_Color color, SDL_Rect lo
         cerr << "SDL_BlitSurface() Failed: " << SDL_GetError() << endl;
     }
 
+}
+
+void DisplayManager::DisplayWipe() {
+    // TODO:  Set up a function to convert SDL_Color to Unit32 color for this
+    SDL_FillRect(gScreenSurface, NULL, 0x000000); 
+    SDL_UpdateWindowSurface ( gWindow );
 }
 
 int DisplayManager::Exit() {
