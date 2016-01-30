@@ -9,22 +9,22 @@
 #include "display_manager.cc"
 #include "input_manager.cc"
 #include "player.cc"
-#include "save_file.cc"
+#include "file_manager.cc"
 #include "monster.cc"
 
 using namespace std;
 
 class GameManager {
     private:
-        SaveFile fileManager;           // Manage players saved file state
-        DisplayManager display;
-        InputManager input;
-        char nextAction;
+        FileManager saveFile;            // Manage players saved file state
+        DisplayManager display;         // Manage the SDL Display to the window
+        InputManager input;             // Manage the SDL Input for the program
+        char mainMenuAction;            // User's requested main menu action
 
     public:
         // Constructor - Just initializing some standard variables
         GameManager () {
-            nextAction = '0';
+            mainMenuAction = '0';
         }
 
         // Initialize the game.  Here, just presents a welcome menu.  Options
@@ -51,40 +51,44 @@ class GameManager {
 
 
 void GameManager::Init() {
+    // Start up SDL libraries
     display.Init();
 
+    // Display the Welcome / Main Menu screen
     display.DisplayWelcome();
 
-    nextAction = input.WelcomeMenuInput();
+    // Retrieve expected user input for main menu.
+    mainMenuAction = input.WelcomeMenuInput();
+    // ASSERT:  mainMenuAction == '0', '1', or '2'
 }
 
 Player GameManager::SelectPlayer() {
     Player actualPlayer;        // Return value for player
 
-    if (nextAction == '2') {
+    if (mainMenuAction == '2') {
         cout << "Loading an existing game!" << endl;
 
         //ensure saved there is a save file
-        if (fileManager.GetNumSavedProfiles() > 0 ) {
+        if (saveFile.GetNumSavedProfiles() > 0 ) {
 
             //Declare array of savedPlayers
-            Player savedPlayers[fileManager.GetNumSavedProfiles()];
+            Player savedPlayers[saveFile.GetNumSavedProfiles()];
 
             //Done.  Now, load players
-            fileManager.LoadPlayers(savedPlayers);
+            saveFile.LoadPlayers(savedPlayers);
 
             // Present the user with existing player options for
             // selection.
-            actualPlayer = fileManager.SelectPlayer(savedPlayers);
+            actualPlayer = saveFile.SelectPlayer(savedPlayers);
         } else {
             // Save.dat is empty or doesn't exist.  Must create a new
-            // character.  Set nextAction = '1' to fall through to next
+            // character.  Set mainMenuAction = '1' to fall through to next
             // if conditional
             cout << "There are currently no saved profiles to load" << endl;
-            nextAction = '1';
+            mainMenuAction = '1';
         }
     }
-    if (nextAction == '1') {
+    if (mainMenuAction == '1') {
         // Create a new Character
         string name = "";           // Name value
 
@@ -98,8 +102,8 @@ Player GameManager::SelectPlayer() {
         actualPlayer.LoadPlayer(name, 0, 10);
 
         // Total number of profiles available is now larger, so
-        // increment and manager this in the fileManager class.
-        fileManager.AddNewProfile();
+        // increment and manager this in the FileManager class.
+        saveFile.AddNewProfile();
     }
 
     return actualPlayer;
@@ -112,7 +116,7 @@ void GameManager::DisplayPlayer(Player player) {
 
 int GameManager::Exit(Player loadedPlayer) {
     // Save player before exiting.
-    fileManager.SavePlayer(loadedPlayer);
+    saveFile.SavePlayer(loadedPlayer);
 
     cout << "Exit, you shall!" << endl;
 

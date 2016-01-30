@@ -8,7 +8,7 @@ SRCDIR := src
 BUILDDIR := build
 SRCEXT := cc
 
-visitor:  main.cc monster.o player.o save_file.o game_manager.o display_manager.o input_manager.o
+visitor:  main.cc monster.o player.o file_manager.o game_manager.o display_manager.o input_manager.o
 	$(CC) main.cc -w -lSDL2 -lSDL2_ttf -o visitor 
 
 display_manager.o:  display_manager.cc
@@ -26,8 +26,8 @@ monster.o:  monster.cc
 player.o:  player.cc
 	$(CC) -c player.cc
 
-save_file.o:  save_file.cc
-	$(CC) -c save_file.cc
+file_manager.o:  file_manager.cc
+	$(CC) -c file_manager.cc
 
 test_player:  player.o test_player_to_file.cc
 	$(CC) -o test_player_to_file.out test_player_to_file.cc
