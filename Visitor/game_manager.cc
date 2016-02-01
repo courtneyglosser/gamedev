@@ -40,6 +40,8 @@ class GameManager {
  
         // Close out the game, save state and return appropriate exit code.
         int Exit (Player loadedPlayer);
+        // Close out the game, before a player is actually selected.
+        int Exit ();
 
         //  Handling combat.  Allowing a specific back and forth attack.
         //  Probably eventually want a combat-specific class, while allowing
@@ -66,6 +68,10 @@ void GameManager::Init() {
 Player GameManager::SelectPlayer() {
     Player actualPlayer;        // Return value for player
 
+    if (mainMenuAction == '0') {
+        // Quit...
+        this->Exit();
+    }
     if (mainMenuAction == '2') {
         cout << "Loading an existing game!" << endl;
 
@@ -121,6 +127,14 @@ int GameManager::Exit(Player loadedPlayer) {
     // Save player before exiting.
     saveFile.SavePlayer(loadedPlayer);
 
+    cout << "Exit, you shall!" << endl;
+
+    display.Exit();
+
+    return 0;
+}
+
+int GameManager::Exit() {
     cout << "Exit, you shall!" << endl;
 
     display.Exit();

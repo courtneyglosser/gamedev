@@ -25,7 +25,6 @@ class InputManager {
 
 
 char InputManager::WelcomeMenuInput() {
-    cout << "How can I Retrieve the SDL input here?" << endl;
     char nextAction = '0';
 
     bool quit = false;
