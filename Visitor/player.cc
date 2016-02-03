@@ -24,6 +24,7 @@ class Player {
     public:
         // Empty constructor
         Player () {
+            name = "";
         }
 
         // Constructor with data

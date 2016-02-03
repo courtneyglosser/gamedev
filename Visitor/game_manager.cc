@@ -68,10 +68,6 @@ void GameManager::Init() {
 Player GameManager::SelectPlayer() {
     Player actualPlayer;        // Return value for player
 
-    if (mainMenuAction == '0') {
-        // Quit...
-        this->Exit();
-    }
     if (mainMenuAction == '2') {
         cout << "Loading an existing game!" << endl;
 

@@ -23,19 +23,24 @@ int main( int argc, char* args[] )
     // Load in either a new player, or select from save file
     loadedPlayer = game.SelectPlayer();
 
-    // XP for loading the character
-    loadedPlayer.Learn(2);
+    // If the player presses something other than 1 or 2, there will be no
+    // selected player.  Therefore, skip the rest, and quit.
+    if (loadedPlayer.GetName() != "") {
 
-    // Spit out player details
-    loadedPlayer.ToString();
+        // XP for loading the character
+        loadedPlayer.Learn(2);
 
-    game.DisplayPlayer(loadedPlayer);
+        // Spit out player details
+        loadedPlayer.ToString();
 
-    // Spit out monster details
-    badGuy.ToString();
+        game.DisplayPlayer(loadedPlayer);
 
-    // Execute a single attack
-    game.ResolveAttack(loadedPlayer, badGuy);
+        // Spit out monster details
+        badGuy.ToString();
+
+        // Execute a single attack
+        game.ResolveAttack(loadedPlayer, badGuy);
+    }
 
     // Save the player and close out gracefully
     return game.Exit(loadedPlayer);
