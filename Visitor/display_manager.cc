@@ -117,7 +117,13 @@ void DisplayManager::DisplayWelcome() {
 }
 
 void DisplayManager::DisplayPlayers(Player savedPlayers[]) {
+    SDL_Color text_color = {255, 255, 255};
+    SDL_Rect text_location = {(SCREEN_WIDTH/2) - 50, 10, 0, 0};
+    DisplayText("Select a Saved Game", text_color, text_location, titleFont);
+    SDL_UpdateWindowSurface (gWindow);
 
+    SDL_Rect player_location = {10, 100, 0, 0};
+    DisplayText("Character #1", text_color, text_location, font);
 }
 
 void DisplayManager::DisplayCharacter(Player player) {

@@ -146,27 +146,29 @@ void GameManager::ResolveAttack(Player &loadedPlayer, Monster badGuy) {
     // Initial player damage to monster
     int damage = loadedPlayer.Attack();
 
-    // Display attack
-    cout << playerName << " is attacking! " << endl;
-    cout << monsterName << " is going to take " << damage << endl;
-    badGuy.TakeDamage(damage);
+    while (badGuy.GetHitPoints() > 0) {
+        // Display attack
+        cout << playerName << " is attacking! " << endl;
+        cout << monsterName << " is going to take " << damage << endl;
+        badGuy.TakeDamage(damage);
 
-    // Result for monster
-    int monsterHitPoints = badGuy.GetHitPoints();
-    cout << monsterName << " has " << monsterHitPoints << endl;
+        // Result for monster
+        int monsterHitPoints = badGuy.GetHitPoints();
+        cout << monsterName << " has " << monsterHitPoints << endl;
 
-    if (monsterHitPoints <= 0) {
-        cout << "Monster is dead!!" << endl;
-        cout << playerName << " receives " << badGuy.GetXp() << endl;
-        loadedPlayer.Learn(badGuy.GetXp());
-    }
-    else {
-        int badGuyDamage = badGuy.Attack();
-        cout << "Monster is alive!!" << endl;
-        cout << "And he's attacking!" << endl;
-        cout << playerName << " is going to take " << badGuyDamage
-             << endl;
-        loadedPlayer.TakeDamage(badGuy.Attack());
+        if (monsterHitPoints <= 0) {
+            cout << "Monster is dead!!" << endl;
+            cout << playerName << " receives " << badGuy.GetXp() << endl;
+            loadedPlayer.Learn(badGuy.GetXp());
+        }
+        else {
+            int badGuyDamage = badGuy.Attack();
+            cout << "Monster is alive!!" << endl;
+            cout << "And he's attacking!" << endl;
+            cout << playerName << " is going to take " << badGuyDamage
+                 << endl;
+            loadedPlayer.TakeDamage(badGuy.Attack());
+        }
     }
 }
 
