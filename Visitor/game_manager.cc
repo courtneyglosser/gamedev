@@ -70,17 +70,18 @@ Player GameManager::SelectPlayer() {
 
     if (mainMenuAction == '2') {
         cout << "Loading an existing game!" << endl;
+        int numSavedProfiles = saveFile.GetNumSavedProfiles();
 
         //ensure saved there is a save file
-        if (saveFile.GetNumSavedProfiles() > 0 ) {
+        if (numSavedProfiles > 0 ) {
 
             //Declare array of savedPlayers
-            Player savedPlayers[saveFile.GetNumSavedProfiles()];
+            Player savedPlayers[numSavedProfiles];
 
             //Done.  Now, load players
             saveFile.LoadPlayers(savedPlayers);
 
-            display.DisplayPlayers(savedPlayers);
+            display.DisplayPlayers(savedPlayers, numSavedProfiles);
 
             // Present the user with existing player options for
             // selection.
