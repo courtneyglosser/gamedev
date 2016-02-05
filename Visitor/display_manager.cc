@@ -123,8 +123,16 @@ void DisplayManager::DisplayPlayers(Player savedPlayers[], int numSavedProfiles)
     SDL_UpdateWindowSurface ( gWindow );
 
     for (int i = 0; i < numSavedProfiles; i++) {
+        int playerNum = i+1;
+        std::stringstream ss;
+        ss << playerNum;
+        string displayPlayerNum = ss.str();
 
-        SDL_Rect player_location = {10, 100*(i+1), 0, 0};
+        SDL_Rect number_location = {10, 100*(i+1)-5, 0, 0};
+        DisplayText(displayPlayerNum, text_color, number_location, titleFont);
+        SDL_UpdateWindowSurface( gWindow );
+   
+        SDL_Rect player_location = {35, 100*(i+1), 0, 0};
         DisplayText(savedPlayers[i].GetName(), text_color, player_location, font);
         SDL_UpdateWindowSurface( gWindow );
    
