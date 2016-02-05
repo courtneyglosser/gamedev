@@ -42,6 +42,15 @@ class Player {
         int GetXp()  { return xp; }
         int GetHP()  { return hitPoints; }
         int GetMaxHP () { return maxHP; }
+        string GetCurrHP () {
+
+            std::stringstream ss;
+            ss << hitPoints << "/" << maxHP;
+            string characterHP = ss.str(); 
+
+            return characterHP;
+
+        }
 
         // Load in a new player
         void LoadPlayer (string inname, int inxp, int inhitPoints) {

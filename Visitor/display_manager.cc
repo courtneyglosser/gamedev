@@ -127,6 +127,10 @@ void DisplayManager::DisplayPlayers(Player savedPlayers[], int numSavedProfiles)
         SDL_Rect player_location = {10, 100*(i+1), 0, 0};
         DisplayText(savedPlayers[i].GetName(), text_color, player_location, font);
         SDL_UpdateWindowSurface( gWindow );
+   
+        SDL_Rect hp_location = {150, 100*(i+1), 0, 0};
+        DisplayText(savedPlayers[i].GetCurrHP(), text_color, hp_location, font);
+        SDL_UpdateWindowSurface( gWindow );
     }
 }
 
@@ -136,9 +140,7 @@ void DisplayManager::DisplayCharacter(Player player) {
     SDL_Color text_color = {255, 255, 255};
     SDL_Rect text_location = {(SCREEN_WIDTH - 150), 10, 0, 0};
     string characterName = player.GetName();
-    std::stringstream ss;
-    ss << player.GetHP() << "/" << player.GetMaxHP();
-    string characterHP = ss.str(); 
+    string characterHP = player.GetCurrHP();
 
     DisplayText(characterName, text_color, text_location, font); 
 
