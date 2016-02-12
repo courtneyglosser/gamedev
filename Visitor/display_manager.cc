@@ -146,15 +146,19 @@ void DisplayManager::DisplayCharacter(Player player) {
     // Write text to surface
     SDL_Surface *text;
     SDL_Color text_color = {255, 255, 255};
-    SDL_Rect text_location = {(SCREEN_WIDTH - 150), 10, 0, 0};
+
     string characterName = player.GetName();
     string characterHP = player.GetCurrHP();
+    string characterXP = player.GetCurrXP();
 
-    DisplayText(characterName, text_color, text_location, font); 
+    SDL_Rect name_location = {(SCREEN_WIDTH - 150), 10, 0, 0};
+    DisplayText(characterName, text_color, name_location, font); 
 
-    SDL_Rect text_location2 = {(SCREEN_WIDTH - 150), 40, 0, 0};
+    SDL_Rect hp_location = {(SCREEN_WIDTH - 150), 40, 0, 0};
+    DisplayText(characterHP, text_color, hp_location, font);
 
-    DisplayText(characterHP, text_color, text_location2, font);
+    SDL_Rect xp_location = {(SCREEN_WIDTH - 150), 70, 0, 0};
+    DisplayText(characterXP, text_color, xp_location, font);
 
     SDL_UpdateWindowSurface ( gWindow );
 

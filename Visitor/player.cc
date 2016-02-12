@@ -52,6 +52,16 @@ class Player {
 
         }
 
+        string GetCurrXP () {
+
+            std::stringstream ss;
+            ss << xp << "/" << "Next Level";
+            string characterXP = ss.str(); 
+
+            return characterXP;
+
+        }
+
         // Load in a new player
         void LoadPlayer (string inname, int inxp, int inhitPoints) {
             name = inname;
