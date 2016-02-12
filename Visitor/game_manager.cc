@@ -20,6 +20,7 @@ class GameManager {
         DisplayManager display;         // Manage the SDL Display to the window
         InputManager input;             // Manage the SDL Input for the program
         char mainMenuAction;            // User's requested main menu action
+        int currActivePlayer;           // User's current character save slot
 
     public:
         // Constructor - Just initializing some standard variables
@@ -84,7 +85,15 @@ Player GameManager::SelectPlayer() {
             // Present the user with existing player options for
             // selection.
             display.DisplayPlayers(savedPlayers, numSavedProfiles);
-            actualPlayer = input.SelectPlayer(savedPlayers, numSavedProfiles);
+            currActivePlayer = input.SelectPlayer(savedPlayers, numSavedProfiles);
+
+            if (currActivePlayer < numSavedProfiles &&
+                currActivePlayer >= 0)
+            {
+                saveFile.SetActiveProfile(currActivePlayer);
+                actualPlayer = savedPlayers[currActivePlayer];
+                actualPlayer.ToString();
+            }
 
             if (actualPlayer.GetName() == "") {
                 //Failed to load an actual player (somehow)

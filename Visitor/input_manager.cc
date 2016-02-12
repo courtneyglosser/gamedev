@@ -20,7 +20,7 @@ class InputManager {
         }
 
         char WelcomeMenuInput();
-        Player SelectPlayer(Player savedPlayers[], int numPlayers);
+        int SelectPlayer(Player savedPlayers[], int numPlayers);
 
 
 
@@ -57,10 +57,9 @@ char InputManager::WelcomeMenuInput() {
     return nextAction;
 }
 
-Player InputManager::SelectPlayer (Player savedPlayers[], int numPlayers) {
+int InputManager::SelectPlayer (Player savedPlayers[], int numPlayers) {
     int keyInput = 0;
     bool quit = false;
-    Player rtn;
 
     SDL_Event e;
     while (!quit) {
@@ -96,15 +95,7 @@ Player InputManager::SelectPlayer (Player savedPlayers[], int numPlayers) {
 
     keyInput--;
 
-    if (keyInput < numPlayers)
-    {
-        cout << "return player:  " << endl;
-        cout << keyInput << endl;
-        rtn = savedPlayers[keyInput];
-        rtn.ToString();
-    }
-
-    return rtn;
+    return keyInput;
     
 }
 

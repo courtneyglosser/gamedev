@@ -28,6 +28,10 @@ class FileManager {
 
         int GetNumSavedProfiles () { return numSavedProfiles; }
 
+        void SetActiveProfile(int activeProfile) {
+            currActiveProfile = activeProfile;
+        }
+
         void AddNewProfile();
 
         void LoadPlayers (Player savedPlayers[]);
