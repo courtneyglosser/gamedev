@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <SDL2/SDL.h>
+#include "player.cc"
 
 using namespace std;
 
@@ -19,6 +20,8 @@ class InputManager {
         }
 
         char WelcomeMenuInput();
+        Player SelectPlayer(Player savedPlayers[], int numPlayers);
+
 
 
 };  // End InputManager
@@ -52,6 +55,57 @@ char InputManager::WelcomeMenuInput() {
     }
 
     return nextAction;
+}
+
+Player InputManager::SelectPlayer (Player savedPlayers[], int numPlayers) {
+    int keyInput = 0;
+    bool quit = false;
+    Player rtn;
+
+    SDL_Event e;
+    while (!quit) {
+        //Handle events on queue
+        while( SDL_PollEvent( &e ) != 0 )
+        {
+            if( e.type == SDL_KEYDOWN )
+            {
+                //Select surfaces based on key press
+                switch( e.key.keysym.sym )
+                {
+                    case SDLK_1:
+                        keyInput = 1;
+                    break;
+
+                    case SDLK_2:
+                        keyInput = 2;
+                    break;
+                    
+                    case SDLK_3:
+                        keyInput = 3;
+                    break;
+
+                }
+                if (keyInput != 0) {
+                    cout << "Got keyInput != 0" << endl;
+                    cout << keyInput << endl;
+                    quit = true;
+                }
+            }
+        }
+    }
+
+    keyInput--;
+
+    if (keyInput < numPlayers)
+    {
+        cout << "return player:  " << endl;
+        cout << keyInput << endl;
+        rtn = savedPlayers[keyInput];
+        rtn.ToString();
+    }
+
+    return rtn;
+    
 }
 
 #endif

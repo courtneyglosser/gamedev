@@ -82,10 +82,12 @@ Player GameManager::SelectPlayer() {
             saveFile.LoadPlayers(savedPlayers);
 
             display.DisplayPlayers(savedPlayers, numSavedProfiles);
+            
+            actualPlayer = input.SelectPlayer(savedPlayers, numSavedProfiles);
 
             // Present the user with existing player options for
             // selection.
-            actualPlayer = saveFile.SelectPlayer(savedPlayers);
+//            actualPlayer = saveFile.SelectPlayer(savedPlayers);
         } else {
             // Save.dat is empty or doesn't exist.  Must create a new
             // character.  Set mainMenuAction = '1' to fall through to next
