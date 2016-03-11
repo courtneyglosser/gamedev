@@ -36,3 +36,7 @@ More robust save file
 -- So, could get more robust in save structure.
 -- Would be nice to suppose JSON or some other data format
 
+Investigate and potentially implement WAD-style game asset storage
+
+Also, clean up this readme and build a separate more robust TODO system
+
