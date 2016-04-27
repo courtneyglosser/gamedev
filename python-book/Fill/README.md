@@ -22,3 +22,7 @@ Going to proceed with Python2
 There is a script in this repository to test out the various PyGame modules:
 
 python-book/verify-pygame-modules.py
+
+Working with this guidelines file for code style:
+https://www.python.org/dev/peps/pep-0008/
+

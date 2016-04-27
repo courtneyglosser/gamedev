@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+import pygame
+from pygame.locals import *
+from sys import exit
+
 SCREEN_WIDTH = 960
 SCREEN_HEIGHT = 720
 START_BUTTON_WIDTH = 120
@@ -12,18 +16,30 @@ mouse_image_filename = 'mouse.png'
 start_button_filename = 'start-button.png'
 exit_button_filename = 'exit-button.png'
 
-import pygame
-from pygame.locals import *
-from sys import exit
-
 pygame.init()
 
 def clickExit(x, y):
+    """ Did the user click the exit button?
+    Determine if the mouse x and y cooridinates are within the confines
+    of the "exit" button.
+    """
     rtn = x > SCREEN_WIDTH - EXIT_BUTTON_WIDTH
     rtn = rtn and x < SCREEN_WIDTH
     rtn = rtn and y > 0
     rtn = rtn and y < EXIT_BUTTON_HEIGHT
     return rtn
+
+def clickStart(x, y):
+    """ Did the user click the start button?
+    Determine if the mouse x and y cooridinates are within the confines
+    of the "start" button.
+    """
+    rtn = x > SCREEN_WIDTH - START_BUTTON_WIDTH
+    rtn = rtn and x < SCREEN_WIDTH
+    rtn = rtn and y > SCREEN_HEIGHT - START_BUTTON_HEIGHT
+    rtn = rtn and y < SCREEN_HEIGHT
+    return rtn
+
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 pygame.display.set_caption("Hello, World!")
@@ -46,6 +62,9 @@ while True:
             if clickExit(clickx, clicky):
                 pygame.quit()
                 exit()
+            if clickStart(clickx, clicky):
+                print ("Starting Game!!")
+
 
         screen.blit(background, (0,0))
 
