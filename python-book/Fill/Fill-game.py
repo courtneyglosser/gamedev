@@ -23,18 +23,22 @@ LOSE_BUTTON_HEIGHT = 100
 DEBUG_OUTPUT = False
 
 # Background Assets
-background_image_filename = 'splash2.png'
+background_image_filename = 'images/splash2.png'
 
 # Mouse Assets
-mouse_image_filename = 'mouse.png'
+mouse_image_filename = 'images/mouse.png'
 
 # Welcome Screen Assets
-start_button_filename = 'start-button.png'
-exit_button_filename = 'exit-button.png'
+start_button_filename = 'images/start-button.png'
+exit_button_filename = 'images/exit-button.png'
 
 # Game Board Assets
-win_button_filename = 'win.png'
-lose_button_filename = 'lose.png'
+win_button_filename = 'images/win.png'
+lose_button_filename = 'images/lose.png'
+
+# Game Board Assets
+win_title_filename = 'images/win.png'
+lose_title_filename = 'images/lose.png'
 
 level_display = 'welcome'
 
@@ -82,7 +86,7 @@ def clickLose(x, y):
 
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
-pygame.display.set_caption("Hello, World!")
+pygame.display.set_caption("Fill Color Game")
 
 # Preload all image assets
 background = pygame.image.load(background_image_filename).convert()
@@ -91,6 +95,8 @@ start_button = pygame.image.load(start_button_filename).convert_alpha()
 exit_button = pygame.image.load(exit_button_filename).convert_alpha()
 win_button = pygame.image.load(win_button_filename).convert_alpha()
 lose_button = pygame.image.load(lose_button_filename).convert_alpha()
+win_title = pygame.image.load(win_title_filename).convert_alpha()
+lose_title = pygame.image.load(lose_title_filename).convert_alpha()
 
 while True:
 
@@ -117,8 +123,10 @@ while True:
                     background.fill((0,0,0))
             if level_display == 'game board':
                 if clickWin(clickx, clicky):
+                    level_display = 'win'
                     print("Clicked Win")
                 if clickLose(clickx, clicky):
+                    level_display = 'lose'
                     print("Clicked Lose")
 
 
@@ -141,6 +149,16 @@ while True:
             ex = (SCREEN_WIDTH / 2)  - (LOSE_BUTTON_WIDTH / 2)
             ey = 350
             screen.blit(lose_button, (ex, ey))
+
+        if level_display == 'win':
+            sx = (SCREEN_WIDTH / 2)  - (WIN_BUTTON_WIDTH / 2)
+            sy = 50
+            screen.blit(win_title, (sx, sy))
+
+        if level_display == 'lose':
+            sx = (SCREEN_WIDTH / 2)  - (WIN_BUTTON_WIDTH / 2)
+            sy = 50
+            screen.blit(lose_title, (sx, sy))
 
 
         x, y = pygame.mouse.get_pos()
