@@ -32,5 +32,8 @@ visitor
 01_hello_SDL
 fill
 
+# Python created files:
+*.pyc
+
 # data file for game:
 *.dat
