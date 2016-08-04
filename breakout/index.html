@@ -1,0 +1,102 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Gamedev Canvas Workshop</title>
+    <style>
+        * { padding: 0; margin: 0; }
+        canvas { background: #eee; display: block; margin: 0 auto; }
+    </style>
+</head>
+<body>
+
+Y-Speed: <input type="text" id="y-speed" /> <br />
+X-Speed: <input type="text" id="x-speed" /> <br />
+
+<canvas id="myCanvas" width="480" height="320"></canvas>
+
+<script>
+    // JavaScript code goes here
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+
+    var x = canvas.width/2;
+    var y = canvas.height-30;
+    var dx = 2;
+    var dy = -2;
+
+    var red = 0
+    var green = 0
+    var blue = 255
+    var ballColor = "rgba(" + red + "," + green + "," + blue + ", 1)"
+
+    var ballRadius = 10;
+
+    var ySpeed = document.getElementById("y-speed")
+    var xSpeed = document.getElementById("x-speed")
+
+    function drawBall() {
+        ctx.beginPath();
+        ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+        ctx.fillStyle = ballColor;
+        ctx.fill();
+        ctx.closePath();
+
+
+    }
+
+    function randomColor() {
+        red = Math.floor(Math.random() * 255) + 1
+        green = Math.floor(Math.random() * 255) + 1
+        blue = Math.floor(Math.random() * 255) + 1
+        ballColor = "rgba(" + red + "," + green + "," + blue + ", 1)"
+    }
+
+    function draw() {
+        // drawing code
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+        drawBall()
+
+        if (y + dy < ballRadius ||
+            y + dy > canvas.height - ballRadius) {
+            dy = -dy
+            randomColor()
+        }
+        if (x + dx < ballRadius ||
+            x + dx > canvas.width - ballRadius) {
+            dx = -dx
+            randomColor()
+        }
+
+        y += dy
+        x += dx
+
+    }
+
+    setInterval(draw, 10);
+
+    ctx.beginPath();
+    ctx.rect(20, 40, 50, 50);
+    ctx.fillStyle = "#FF0000";
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.arc(240, 160, 20, 0, Math.PI*2, false);
+    ctx.fillStyle = "green";
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.rect(160, 10, 100, 40);
+    ctx.strokeStyle = "rgba(0, 0, 255, 0.5)";
+    ctx.stroke();
+    ctx.closePath();
+
+</script>
+
+</body>
+</html>
