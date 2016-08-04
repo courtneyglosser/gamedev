@@ -37,6 +37,13 @@ X-Speed: <input type="text" id="x-speed" /> <br />
     var ySpeed = document.getElementById("y-speed")
     var xSpeed = document.getElementById("x-speed")
 
+    var paddleHeight = 10;
+    var paddleWidth = 175;
+    var paddleX = (canvas.width-paddleWidth)/2;
+
+    var rightPressed = false;
+    var leftPressed = false;
+
     function drawBall() {
         ctx.beginPath();
         ctx.arc(x, y, ballRadius, 0, Math.PI*2);
@@ -54,16 +61,33 @@ X-Speed: <input type="text" id="x-speed" /> <br />
         ballColor = "rgba(" + red + "," + green + "," + blue + ", 1)"
     }
 
+    function drawPaddle() {
+        ctx.beginPath();
+        ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+    }
+
     function draw() {
         // drawing code
         ctx.clearRect(0, 0, canvas.width, canvas.height)
 
         drawBall()
+        drawPaddle()
 
-        if (y + dy < ballRadius ||
-            y + dy > canvas.height - ballRadius) {
+        if (y + dy < ballRadius) {
             dy = -dy
             randomColor()
+        }
+        else if (y + dy > canvas.height - ballRadius) {
+            if(x > paddleX && x < paddleX + paddleWidth) {
+                dy = -dy;
+            }
+            else {
+                alert("Game Over!!")
+                document.location.reload()
+            }
         }
         if (x + dx < ballRadius ||
             x + dx > canvas.width - ballRadius) {
@@ -71,12 +95,43 @@ X-Speed: <input type="text" id="x-speed" /> <br />
             randomColor()
         }
 
+        if(rightPressed && paddleX < canvas.width - paddleWidth) {
+            paddleX += 7;
+        }
+        else if(leftPressed && paddleX > 0) {
+            paddleX -= 7;
+        }
+
         y += dy
         x += dx
 
     }
 
+    function keyDownHandler(e) {
+        console.log("Handler:  ", e.keyCode)
+        if(e.keyCode == 39) {
+            rightPressed = true;
+        }
+        else if(e.keyCode == 37) {
+            leftPressed = true;
+        }
+    }
+
+    function keyUpHandler(e) {
+        console.log("upHandler:  ", e.keyCode)
+        if(e.keyCode == 39) {
+            rightPressed = false;
+        }
+        else if(e.keyCode == 37) {
+            leftPressed = false;
+        }
+    }
+
     setInterval(draw, 10);
+
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+
 
     ctx.beginPath();
     ctx.rect(20, 40, 50, 50);
