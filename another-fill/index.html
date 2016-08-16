@@ -1,0 +1,189 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Gamedev Canvas Workshop</title>
+    <style>
+        * { padding: 0; margin: 0; }
+        canvas { background: #eee; display: block; margin: 0 auto; }
+    </style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="960" height="640"></canvas>
+
+<script>
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+
+    var red = 0
+    var green = 0
+    var blue = 255
+    var color = "rgba(" + red + "," + green + "," + blue + ", 1)"
+
+    var score = 0
+
+    var leftMargin = 250
+    var topMargin = 40
+    var boardWidth = 460
+    var boardHeight = 460
+
+    function drawScore() {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#0095DD";
+        ctx.fillText("Score: "+score, 8, 20);
+    }
+
+    function drawBoard() {
+
+        ctx.beginPath();
+        ctx.rect(leftMargin, topMargin, boardWidth, boardHeight)
+        ctx.fillStyle = color
+        ctx.fill();
+        ctx.closePath();
+
+    }
+
+    function drawButtons() {
+        var buttonSpacer = 100
+        var buttonWidth = (boardWidth - buttonSpacer) / 3
+        var buttonHeight = buttonWidth / 3
+        var red = 255
+        var green = 0
+        var blue = 255
+        var color1 = "rgba(" + red + "," + green + "," + blue + ", 1)"
+        var red = 255
+        var green = 255
+        var blue = 255
+        var color2 = "rgba(" + red + "," + green + "," + blue + ", 1)"
+        var red = 0
+        var green = 255
+        var blue = 255
+        var color3 = "rgba(" + red + "," + green + "," + blue + ", 1)"
+        var red = 255
+        var green = 255
+        var blue = 0
+        var color4 = "rgba(" + red + "," + green + "," + blue + ", 1)"
+        var red = 0
+        var green = 0
+        var blue = 255
+        var color5 = "rgba(" + red + "," + green + "," + blue + ", 1)"
+        var red = 255
+        var green = 0
+        var blue = 0
+        var color6 = "rgba(" + red + "," + green + "," + blue + ", 1)"
+       
+        ctx.beginPath()
+        ctx.rect(leftMargin, (topMargin + boardHeight + buttonSpacer / 4), buttonWidth, buttonHeight)
+        ctx.fillStyle = color1
+        ctx.fill();
+        ctx.closePath() 
+
+
+        ctx.beginPath()
+        ctx.rect(leftMargin + buttonWidth + buttonSpacer/2, (topMargin + boardHeight + buttonSpacer / 4), buttonWidth, buttonHeight)
+        ctx.fillStyle = color2
+        ctx.fill();
+        ctx.closePath() 
+
+
+        ctx.beginPath()
+        ctx.rect(leftMargin + (buttonWidth + buttonSpacer/2) * 2, (topMargin + boardHeight + buttonSpacer / 4), buttonWidth, buttonHeight)
+        ctx.fillStyle = color3
+        ctx.fill();
+        ctx.closePath() 
+
+        ctx.beginPath()
+        ctx.rect(leftMargin, (topMargin + boardHeight + buttonHeight + (buttonSpacer / 4)*2), buttonWidth, buttonHeight)
+        ctx.fillStyle = color4
+        ctx.fill();
+        ctx.closePath() 
+
+
+        ctx.beginPath()
+        ctx.rect(leftMargin + buttonWidth + buttonSpacer/2, (topMargin + boardHeight + buttonHeight + (buttonSpacer / 4)*2), buttonWidth, buttonHeight)
+        ctx.fillStyle = color5
+        ctx.fill();
+        ctx.closePath() 
+
+
+        ctx.beginPath()
+        ctx.rect(leftMargin + (buttonWidth + buttonSpacer/2) * 2, (topMargin + boardHeight + buttonHeight + (buttonSpacer / 4)*2), buttonWidth, buttonHeight)
+        ctx.fillStyle = color6
+        ctx.fill();
+        ctx.closePath() 
+
+    }
+
+    function draw() {
+        // drawing code
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+        drawBoard()
+        drawButtons()
+
+        drawScore()
+
+    }
+
+    function keyDownHandler(e) {
+        console.log("Handler:  ", e.keyCode)
+        if(e.keyCode == 39) {
+            rightPressed = true;
+        }
+        else if(e.keyCode == 37) {
+            leftPressed = true;
+        }
+    }
+
+    function keyUpHandler(e) {
+        console.log("upHandler:  ", e.keyCode)
+        if(e.keyCode == 39) {
+            rightPressed = false;
+        }
+        else if(e.keyCode == 37) {
+            leftPressed = false;
+        }
+    }
+
+    function mouseMoveHandler(e) {
+        var relativeX = e.clientX - canvas.offsetLeft;
+        if(relativeX > 0 && relativeX < canvas.width) {
+        }
+    }
+
+    function collisionDetection() {
+    }
+
+
+    setInterval(draw, 10);
+
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+    document.addEventListener("mousemove", mouseMoveHandler, false);
+
+
+    ctx.beginPath();
+    ctx.rect(20, 40, 50, 50);
+    ctx.fillStyle = "#FF0000";
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.arc(240, 160, 20, 0, Math.PI*2, false);
+    ctx.fillStyle = "green";
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.rect(160, 10, 100, 40);
+    ctx.strokeStyle = "rgba(0, 0, 255, 0.5)";
+    ctx.stroke();
+    ctx.closePath();
+
+</script>
+
+</body>
+</html>
