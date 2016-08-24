@@ -22,8 +22,8 @@ var buttonSpacer = 100
 var buttonWidth = (boardWidth - buttonSpacer) / 3
 var buttonHeight = buttonWidth / 3
 
-var numColumns = 2
-var numRows = 2
+var numColumns = 10
+var numRows = 10
 
 var score = numColumns * numRows
 
@@ -97,11 +97,11 @@ var tileWidth = boardWidth / numColumns
 var tileHeight = boardHeight / numRows
 var boardTiles = []
 
-for(var i = 0; i < numColumns; i++) {
-    for (var j = 0; j < numRows; j++) {
+for(var i = 0; i < numRows; i++) {
+    for (var j = 0; j < numColumns; j++) {
         boardTiles.push({
-            leftMargin: leftMargin + i * tileWidth,
-            topMargin: topMargin + j * tileHeight,
+            leftMargin: leftMargin + j * tileWidth,
+            topMargin: topMargin + i * tileHeight,
             color: buttonColors[getRandomInt(0, 5)]
         })
     }
@@ -175,15 +175,11 @@ function keyUpHandler(e) {
     }
 }
 
-function mouseMoveHandler(e) {
-    var relativeX = e.clientX - canvas.offsetLeft;
-    if(relativeX > 0 && relativeX < canvas.width) {
-    }
-}
-
 function mouseDownHandler(e) {
-    var relativeX = e.clientX - canvas.offsetLeft;
-    var relativeY = e.clientY - canvas.offsetTop;
+    var BB=canvas.getBoundingClientRect();
+
+    var relativeX = e.clientX - BB.left;
+    var relativeY = e.clientY - BB.top;
 
     clickX = relativeX
     clickY = relativeY
@@ -218,23 +214,13 @@ function registerClick(idx) {
 function getArrayOfMatchingTiles() {
 
     // Start at boardTiles[0]
-    var rtn = [0]
+    var i = 0
+    var rtn = [i]
     var clr = boardTiles[0].color
-    
-    if(boardTiles[1].color == clr) {
-        rtn.push(1)
-        if (boardTiles[3].color == clr) {
-            rtn.push(3)
-        }
-    }
-    if (boardTiles[2].color == clr) {
-        rtn.push(2)
-        if (boardTiles[3].color == clr) {
-            rtn.push(3)
-        }
-    }
 
-    console.log("Return: ", rtn)
+    rtn = findNeighbors(rtn, i, clr)
+
+//     console.log("Return: ", rtn)
 
     uniqueArray = rtn.filter(function(item, pos, self) {
         return self.indexOf(item) == pos;
@@ -245,12 +231,72 @@ function getArrayOfMatchingTiles() {
     return uniqueArray
 }
 
+function findNeighbors(matchingTiles, checkTile, checkColor) {
+
+    console.log("Checking Tile: ", checkTile)
+
+    // Check "up"
+    if (checkTile > numColumns) {
+        // ASSERT:  Not on the top row, check above:
+        var up = checkTile - numColumns
+        if (matchingTiles.indexOf(up) == -1) {
+            // ASSERT:  up tile is not already in the array
+            if (boardTiles[up].color == checkColor) {
+                // ASSERT:  This is a match.  Add it, and find it's neighbors
+                matchingTiles.push(up)
+                matchingTiles = findNeighbors(matchingTiles, up, checkColor)
+            }
+        }
+    }
+
+    // Check "right"
+    if (checkTile % numColumns != numColumns - 1) {
+        // ASSERT:  Not on the fartherst right column, check right
+        var right = checkTile + 1
+        if (matchingTiles.indexOf(right) == -1) {
+            // ASSERT:  right tile not alread in our array
+            if (boardTiles[right].color == checkColor) {
+                matchingTiles.push(right)
+                matchingTiles = findNeighbors(matchingTiles, right, checkColor)
+            }
+        }
+    }
+
+    // Check "down"
+    if (checkTile + numColumns < numColumns * numRows) {
+        // ASSERT:  Not on the bottom row, check down
+        var down = checkTile + numColumns
+        if (matchingTiles.indexOf(down) == -1) {
+            // ASSERT:  down tile not already in our array
+            if (boardTiles[down].color == checkColor) {
+                matchingTiles.push(down)
+                matchingTiles = findNeighbors(matchingTiles, down, checkColor)
+            }
+        }
+    }
+
+    // Check "left"
+    if (checkTile % numColumns > 0) {
+        // ASSERT:  Not in the left-most column.  Check left
+        var left = checkTile - 1
+        if (matchingTiles.indexOf(left) == -1) {
+            // ASSERT:  left tile is not already in our array
+            if (boardTiles[left].color == checkColor) {
+                matchingTiles.push(left)
+                matchingTiles = findNeighbors(matchingTiles, left, checkColor)
+            }
+        }
+    }
+
+    return matchingTiles
+
+}
+
 
 setInterval(draw, 10);
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
-document.addEventListener("mousemove", mouseMoveHandler, false);
 document.addEventListener("mousedown", mouseDownHandler, false);
 
 
