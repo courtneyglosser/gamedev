@@ -4,6 +4,8 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
+var gameState = "active"
+
 
 var clickX = 0
 var clickY = 0
@@ -22,8 +24,8 @@ var buttonSpacer = 100
 var buttonWidth = (boardWidth - buttonSpacer) / 3
 var buttonHeight = buttonWidth / 3
 
-var numColumns = 10
-var numRows = 10
+var numColumns = 3
+var numRows = 3
 
 var score = numColumns * numRows
 
@@ -144,35 +146,36 @@ function drawButtons() {
    
 }
 
+function drawWin() {
+    ctx.font = "26px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Winner! ", canvas.width / 2 - 20, canvas.height / 2);
+}
+
+function drawLose() {
+    ctx.font = "26px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Loser :( ", canvas.width / 2 - 20, canvas.height / 2);
+}
+
 function draw() {
     // drawing code
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-    drawBoard()
-    drawButtons()
+    if (gameState == "active") {
 
-    drawScore()
+        drawBoard()
+        drawButtons()
 
-}
+        drawScore()
+    }
+    else if (gameState == "win") {
+        drawWin()
+    }
+    else if (gameState == "lose") {
+        drawLose()
+    }
 
-function keyDownHandler(e) {
-    console.log("Handler:  ", e.keyCode)
-    if(e.keyCode == 39) {
-        rightPressed = true;
-    }
-    else if(e.keyCode == 37) {
-        leftPressed = true;
-    }
-}
-
-function keyUpHandler(e) {
-    console.log("upHandler:  ", e.keyCode)
-    if(e.keyCode == 39) {
-        rightPressed = false;
-    }
-    else if(e.keyCode == 37) {
-        leftPressed = false;
-    }
 }
 
 function mouseDownHandler(e) {
@@ -186,6 +189,7 @@ function mouseDownHandler(e) {
 
     buttonPressDetection()
 
+    draw()
 }
 
 function buttonPressDetection() {
@@ -200,7 +204,6 @@ function buttonPressDetection() {
 }
 
 function registerClick(idx) {
-    console.log("RegisterClick, calling...")
     var tiles = getArrayOfMatchingTiles()
 
     //ASSERT:  Clicked button[idx].  Set color to match
@@ -209,6 +212,18 @@ function registerClick(idx) {
     })
 
     score--
+
+    if (score < 1) {
+        // Loser :(
+        gameState = "lose"
+    }
+    else {
+        tiles = getArrayOfMatchingTiles()
+        if (boardTiles.length == tiles.length) {
+            // Winner!!
+            gameState = "win"
+        }
+    }
 }
 
 function getArrayOfMatchingTiles() {
@@ -220,20 +235,17 @@ function getArrayOfMatchingTiles() {
 
     rtn = findNeighbors(rtn, i, clr)
 
-//     console.log("Return: ", rtn)
 
     uniqueArray = rtn.filter(function(item, pos, self) {
         return self.indexOf(item) == pos;
     })
 
-    console.log("Return: ", uniqueArray)
 
     return uniqueArray
 }
 
 function findNeighbors(matchingTiles, checkTile, checkColor) {
 
-    console.log("Checking Tile: ", checkTile)
 
     // Check "up"
     if (checkTile > numColumns) {
@@ -293,27 +305,47 @@ function findNeighbors(matchingTiles, checkTile, checkColor) {
 }
 
 
-setInterval(draw, 10);
+//setInterval(draw, 10);
+draw()
 
-document.addEventListener("keydown", keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
+//document.addEventListener("keydown", keyDownHandler, false);
+//document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("mousedown", mouseDownHandler, false);
 
+//
+//ctx.beginPath();
+//ctx.rect(20, 40, 50, 50);
+//ctx.fillStyle = "#FF0000";
+//ctx.fill();
+//ctx.closePath();
+//
+//ctx.beginPath();
+//ctx.arc(240, 160, 20, 0, Math.PI*2, false);
+//ctx.fillStyle = "green";
+//ctx.fill();
+//ctx.closePath();
+//
+//ctx.beginPath();
+//ctx.rect(160, 10, 100, 40);
+//ctx.strokeStyle = "rgba(0, 0, 255, 0.5)";
+//ctx.stroke();
+//ctx.closePath();
 
-ctx.beginPath();
-ctx.rect(20, 40, 50, 50);
-ctx.fillStyle = "#FF0000";
-ctx.fill();
-ctx.closePath();
-
-ctx.beginPath();
-ctx.arc(240, 160, 20, 0, Math.PI*2, false);
-ctx.fillStyle = "green";
-ctx.fill();
-ctx.closePath();
-
-ctx.beginPath();
-ctx.rect(160, 10, 100, 40);
-ctx.strokeStyle = "rgba(0, 0, 255, 0.5)";
-ctx.stroke();
-ctx.closePath();
+//function keyDownHandler(e) {
+//    if(e.keyCode == 39) {
+//        rightPressed = true;
+//    }
+//    else if(e.keyCode == 37) {
+//        leftPressed = true;
+//    }
+//}
+//
+//function keyUpHandler(e) {
+//    if(e.keyCode == 39) {
+//        rightPressed = false;
+//    }
+//    else if(e.keyCode == 37) {
+//        leftPressed = false;
+//    }
+//}
+//
