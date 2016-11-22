@@ -37,3 +37,7 @@ fill
 
 # data file for game:
 *.dat
+
+# Java .class files
+*.class
+
