@@ -24,8 +24,8 @@ var buttonSpacer = 100
 var buttonWidth = (boardWidth - buttonSpacer) / 3
 var buttonHeight = buttonWidth / 3
 
-var numColumns = 3
-var numRows = 3
+var numColumns = 9
+var numRows = 9
 
 var score = numColumns * numRows
 
