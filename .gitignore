@@ -41,3 +41,5 @@ fill
 # Java .class files
 *.class
 
+# Installed NPM libraries
+node_modules
